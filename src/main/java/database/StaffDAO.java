@@ -182,12 +182,7 @@ public class StaffDAO {
 
     public List<Staff> searchBySmallestSalary() {
         List<Staff> list = new ArrayList<>();
-        String sql = """
-                SELECT *
-                FROM staff
-                WHERE salary = (SELECT MIN(salary) FROM staff)
-                ORDER BY id
-                """;
+        String sql = "SELECT * FROM staff WHERE salary = (SELECT MIN(salary) FROM staff) ORDER BY id";
 
         try (Connection conn = requireConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
