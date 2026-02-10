@@ -27,6 +27,7 @@ public class MenuManager implements Menu {
         System.out.println("6. Delete Staff");
         System.out.println("7. Search by Name");
         System.out.println("8. Search by Salary Range");
+        System.out.println("9. Search by Smallest Salary");
         System.out.println("0. Exit");
     }
 
@@ -47,14 +48,27 @@ public class MenuManager implements Menu {
                 }
 
                 switch (choice) {
-                    case 1: addCashier(); break;
-                    case 2: addManager(); break;
-                    case 3: showAllStaff(); break;
-                    case 4: demonstratePolymorphism(); break;
-                    case 5: updateStaff(); break;
-                    case 6: deleteStaff(); break;
+                    case 1:
+                        addCashier();
+                        break;
+                    case 2:
+                        addManager();
+                        break;
+                    case 3:
+                        showAllStaff();
+                        break;
+                    case 4:
+                        demonstratePolymorphism();
+                        break;
+                    case 5:
+                        updateStaff();
+                        break;
+                    case 6:
+                        deleteStaff();
+                        break;
                     case 7: searchByName(); break;
                     case 8: searchBySalary(); break;
+                    case 9: searchBySmallestSalary(); break;
                     case 0: System.out.println("Exiting..."); break;
                     default: System.out.println("Invalid option.");
                 }
@@ -205,6 +219,17 @@ public class MenuManager implements Menu {
 
         List<Staff> results = staffDAO.searchBySalaryRange(min, max);
         if (results.isEmpty()) System.out.println("No results.");
+        for (Staff s : results) System.out.println(s);
+    }
+
+    private void searchBySmallestSalary() {
+        List<Staff> results = staffDAO.searchBySmallestSalary();
+        if (results.isEmpty()) {
+            System.out.println("No results.");
+            return;
+        }
+
+        System.out.println("--- Staff with the Smallest Salary ---");
         for (Staff s : results) System.out.println(s);
     }
 }
