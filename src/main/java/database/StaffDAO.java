@@ -41,11 +41,13 @@ public class StaffDAO {
         String sql = "INSERT INTO staff (id, name, salary, role, team_size) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = requireConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, manager.getId());
             stmt.setString(2, manager.getName());
             stmt.setDouble(3, manager.getSalary());
             stmt.setString(4, "Manager");
             stmt.setInt(5, manager.getTeamSize());
+
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -75,12 +77,15 @@ public class StaffDAO {
         String sql = "SELECT * FROM staff WHERE id = ?";
         try (Connection conn = requireConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return extractStaff(rs);
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -156,15 +161,19 @@ public class StaffDAO {
     public List<Staff> searchBySalaryRange(double min, double max) {
         List<Staff> list = new ArrayList<>();
         String sql = "SELECT * FROM staff WHERE salary BETWEEN ? AND ? ORDER BY salary DESC";
+
         try (Connection conn = requireConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setDouble(1, min);
             stmt.setDouble(2, max);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     list.add(extractStaff(rs));
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
